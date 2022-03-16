@@ -11,7 +11,7 @@ type Place = {
 };
 
 type MapProps = {
-  places: Place[];
+  places?: Place[];
 };
 
 const Map = ({ places }: MapProps) => {
