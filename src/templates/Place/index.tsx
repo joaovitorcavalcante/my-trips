@@ -1,5 +1,6 @@
 import { CloseOutline } from '@styled-icons/evaicons-outline';
 import LinkWrapper from 'components/LinkWrapper';
+import { NextSeo } from 'next-seo';
 import NextImage from 'next/image';
 import * as S from './styles';
 
@@ -13,8 +14,9 @@ type PlaceTemplateProps = {
   place: {
     slug: string;
     name: string;
-    description: {
+    description?: {
       html: string;
+      text: string;
     };
     gallery: Image[];
   };
@@ -23,6 +25,15 @@ type PlaceTemplateProps = {
 export default function PlaceTemplate({ place }: PlaceTemplateProps) {
   return (
     <>
+      <NextSeo
+        title={`${place.name} - My Trips`}
+        description={
+          place.description?.text ||
+          'A simples project to show in a map the places.'
+        }
+        canonical="https://mytrips.com"
+      />
+
       <LinkWrapper href="/">
         <CloseOutline size={32} aria-label="Voltar para o mapa" />
       </LinkWrapper>
@@ -32,7 +43,7 @@ export default function PlaceTemplate({ place }: PlaceTemplateProps) {
           <S.Heading>{place.name}</S.Heading>
 
           <S.Body
-            dangerouslySetInnerHTML={{ __html: place.description.html }}
+            dangerouslySetInnerHTML={{ __html: place.description?.html || '' }}
           />
 
           <S.Gallery>
@@ -41,8 +52,9 @@ export default function PlaceTemplate({ place }: PlaceTemplateProps) {
                 key={`photo-${index}`}
                 src={image.url}
                 alt={place.name}
-                width={image.width}
-                height={image.height}
+                width={1000}
+                height={600}
+                quality={75}
               />
             ))}
           </S.Gallery>

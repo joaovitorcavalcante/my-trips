@@ -17,6 +17,7 @@ type PlaceProps = {
     name: string;
     description: {
       html: string;
+      text: string;
     };
     gallery: Image[];
   };
@@ -51,6 +52,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!place) return { notFound: true };
 
   return {
+    revalidate: 5,
     props: {
       place
     }
